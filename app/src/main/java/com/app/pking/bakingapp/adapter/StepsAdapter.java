@@ -2,10 +2,12 @@ package com.app.pking.bakingapp.adapter;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -74,7 +76,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepViewHold
             super(itemView);
             stepShortDescription = itemView.findViewById(R.id.tv_step_short_description);
             itemView.setOnClickListener(this);
-
         }
 
 

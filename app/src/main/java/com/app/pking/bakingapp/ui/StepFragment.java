@@ -11,10 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.pking.bakingapp.R;
 import com.app.pking.bakingapp.model.Step;
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -28,6 +31,8 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
@@ -59,6 +64,7 @@ public class StepFragment extends Fragment {
 
         mPlayerView = rootView.findViewById(R.id.exo_video_view);
         TextView description = rootView.findViewById(R.id.fr_tv_description);
+        ImageView imageView = rootView.findViewById(R.id.iv_step_image);
 
         if (mStep != null) {
             description.setText(mStep.getDescription());
@@ -66,10 +72,16 @@ public class StepFragment extends Fragment {
             Log.v(TAG, "This fragment has a null step");
         }
 
+        if (mStep.getThumbnailURL() != null && !mStep.getThumbnailURL().equals("")) {
+            Glide.with(this).load(mStep.getThumbnailURL()).into(imageView);
+        } else {
+            imageView.setVisibility(View.GONE);
+        }
+
         try {
-            if(mStep.getVideoURL() != null && !mStep.getVideoURL().equals("")){
+            if (mStep.getVideoURL() != null && !mStep.getVideoURL().equals("")) {
                 initializePlayer(Uri.parse(mStep.getVideoURL()));
-            }else {
+            } else {
                 mPlayerView.setVisibility(View.GONE);
             }
 

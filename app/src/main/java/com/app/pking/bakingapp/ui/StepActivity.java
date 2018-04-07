@@ -2,8 +2,10 @@ package com.app.pking.bakingapp.ui;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +22,11 @@ import butterknife.ButterKnife;
 
 public class StepActivity extends AppCompatActivity {
 
+    private static final String INDEX_KEY = "indexKey";
     List<Step> mStepList;
     int index;
     StepFragment fragment;
+    FragmentManager fragmentManager;
 
 
     @Override
@@ -31,9 +35,14 @@ public class StepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step);
         ButterKnife.bind(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setStep();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(savedInstanceState != null){
+            index = savedInstanceState.getInt(INDEX_KEY);
+        }
+
+        fragmentManager = getSupportFragmentManager();
 
         fragment = new StepFragment();
         fragment.setmStep(mStepList.get(index));
@@ -69,15 +78,35 @@ public class StepActivity extends AppCompatActivity {
     }
 
     public void goToNextStep(View view) {
-        if(index+1 >= mStepList.size()){
-            Toast.makeText(this,"End of steps",Toast.LENGTH_SHORT).show();
-        }else {
-            Intent intent = new Intent(this, StepActivity.class);
+        if (index + 1 >= mStepList.size()) {
+            Toast.makeText(this, "End of steps", Toast.LENGTH_SHORT).show();
+        } else {
+            index++;
+            fragment = new StepFragment();
+            fragment.setmStep(mStepList.get(index));
+            fragment.setContext(this);
 
-            intent.putExtra("step", Parcels.wrap(mStepList));
-            intent.putExtra("index", mStepList.get(index).getId()+1);
-            startActivity(intent);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.step_container, fragment)
+                    .commit();
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(INDEX_KEY,index);
     }
 }

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @BindView(R.id.rv_recipe)
     RecyclerView mRecyclerView;
     RecipesAdapter mRecipesAdapter;
-    List<Recipe> mRecipeList;
+    ArrayList<Recipe> mRecipeList;
 
 
     @Override
@@ -64,15 +64,23 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         mRecipesAdapter = new RecipesAdapter(mRecipeList, this, (RecipesAdapter.RecipeAdapterOnClickHandler) context);
         mRecyclerView.setAdapter(mRecipesAdapter);
 
-        getResponseRetrofit();
+        if (savedInstanceState != null) {
+            mRecipeList = savedInstanceState.getParcelableArrayList("recipeList");
+            mRecipesAdapter.notifyDataSetChanged();
+        }else {
+            getResponseRetrofit();
+        }
+
+
 
 
     }
 
-    private void setWheelVisible(){
+    private void setWheelVisible() {
         wheel.setVisibility(View.VISIBLE);
     }
-    private void setWheelInVisible(){
+
+    private void setWheelInVisible() {
         wheel.setVisibility(View.INVISIBLE);
     }
 
@@ -117,5 +125,11 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         intent.putExtra("recipe", Parcels.wrap(mRecipeList.get(position)));
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("recipeList",mRecipeList);
     }
 }

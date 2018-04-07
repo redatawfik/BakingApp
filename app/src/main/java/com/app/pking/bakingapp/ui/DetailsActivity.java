@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(STEP_INDEX_KEY)) {
             stepIndex = savedInstanceState.getInt(STEP_INDEX_KEY);
@@ -98,6 +100,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
         }
 
         remoteViews.setTextViewText(R.id.wd_ingredients_list, ingredientText.toString());
+        remoteViews.setTextViewText(R.id.ingredients_text, mRecipe.getName() + " Ingredients : ");
         appWidgetManager.updateAppWidget(thisWidget, remoteViews);
 
     }
@@ -157,5 +160,16 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STEP_INDEX_KEY, stepIndex);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
