@@ -2,12 +2,10 @@ package com.app.pking.bakingapp.ui;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.pking.bakingapp.R;
@@ -17,16 +15,15 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StepActivity extends AppCompatActivity {
 
     private static final String INDEX_KEY = "indexKey";
-    List<Step> mStepList;
-    int index;
-    StepFragment fragment;
-    FragmentManager fragmentManager;
+    private List<Step> mStepList;
+    private int index;
+    private StepFragment fragment;
+    private FragmentManager fragmentManager;
 
 
     @Override

@@ -2,18 +2,14 @@ package com.app.pking.bakingapp.adapter;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.pking.bakingapp.R;
-import com.app.pking.bakingapp.model.Recipe;
 import com.app.pking.bakingapp.model.Step;
 
 import java.util.List;
@@ -23,7 +19,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepViewHold
     private final List<Step> mStepsList;
 
     private final StepAdapterOnClickHandler mClickHandler;
-    Context mContext;
+    private final Context mContext;
 
     public interface StepAdapterOnClickHandler {
         void onClick(int position);

@@ -2,8 +2,7 @@ package com.app.pking.bakingapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    Context context;
+    private Context context;
 
     private final static String RECIPE_LIST_KEY = "recipeListKey";
 
@@ -43,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     ProgressWheel wheel;
     @BindView(R.id.rv_recipe)
     RecyclerView mRecyclerView;
-    RecipesAdapter mRecipesAdapter;
-    ArrayList<Recipe> mRecipeList;
+    private RecipesAdapter mRecipesAdapter;
+    private ArrayList<Recipe> mRecipeList;
 
 
     @Override
@@ -64,14 +63,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         mRecipesAdapter = new RecipesAdapter(mRecipeList, this, (RecipesAdapter.RecipeAdapterOnClickHandler) context);
         mRecyclerView.setAdapter(mRecipesAdapter);
 
-        if (savedInstanceState != null) {
-            mRecipeList = savedInstanceState.getParcelableArrayList("recipeList");
-            mRecipesAdapter.notifyDataSetChanged();
-        }else {
+
             getResponseRetrofit();
-        }
-
-
 
 
     }
@@ -95,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
 
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 mRecipeList.addAll(response.body());
                 setWheelInVisible();
                 mRecipesAdapter.notifyDataSetChanged();
@@ -107,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
 
                 setWheelInVisible();
                 Toast.makeText(context, "No Internet Connection!", Toast.LENGTH_LONG).show();
@@ -125,11 +118,5 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         intent.putExtra("recipe", Parcels.wrap(mRecipeList.get(position)));
         startActivity(intent);
 
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("recipeList",mRecipeList);
     }
 }

@@ -12,15 +12,15 @@ public class Step implements Parcelable {
 
 
     @SerializedName("id")
-    int id;
+    private int id;
     @SerializedName("shortDescription")
-    String shortDescription;
+    private String shortDescription;
     @SerializedName("description")
-    String description;
+    private String description;
     @SerializedName("videoURL")
-    String videoURL;
+    private String videoURL;
     @SerializedName("thumbnailURL")
-    String thumbnailURL;
+    private  String thumbnailURL;
 
     Step(){}
 

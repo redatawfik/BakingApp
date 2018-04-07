@@ -18,7 +18,7 @@
             android:id="@+id/next_step_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Go to next step"
+            android:text="@string/next_step"
             android:onClick="goToNextStep"
             android:layout_gravity="bottom"/>
 

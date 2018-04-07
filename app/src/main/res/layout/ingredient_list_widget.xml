@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="#fd5722"
         android:contentDescription="@string/appwidget_text"
-        android:text="Ingredients list :"
+        android:text="@string/ingredients"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold|italic"

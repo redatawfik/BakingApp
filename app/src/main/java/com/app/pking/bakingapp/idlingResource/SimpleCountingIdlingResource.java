@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * This class can then be used to wrap up operations that while in progress should block tests from
  * accessing the UI.
  */
-public final class SimpleCountingIdlingResource implements IdlingResource {
+class SimpleCountingIdlingResource implements IdlingResource {
 
     private final String mResourceName;
 
@@ -28,7 +28,7 @@ public final class SimpleCountingIdlingResource implements IdlingResource {
      *
      * @param resourceName the resource name this resource should report to Espresso.
      */
-    public SimpleCountingIdlingResource(String resourceName) {
+      SimpleCountingIdlingResource(String resourceName) {
         mResourceName = resourceName;
     }
 
@@ -50,7 +50,7 @@ public final class SimpleCountingIdlingResource implements IdlingResource {
     /**
      * Increments the count of in-flight transactions to the resource being monitored.
      */
-    public void increment() {
+     void increment() {
         counter.getAndIncrement();
     }
 
@@ -61,7 +61,7 @@ public final class SimpleCountingIdlingResource implements IdlingResource {
      *
      * @throws IllegalStateException if the counter is below 0.
      */
-    public void decrement() {
+     void decrement() {
         int counterVal = counter.decrementAndGet();
         if (counterVal == 0) {
             // we've gone from non-zero to zero. That means we're idle now! Tell espresso.

@@ -21,7 +21,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
     private final List<Recipe> mRecipeList;
 
     private final RecipeAdapterOnClickHandler mClickHandler;
-    Context mContext;
+    private final Context mContext;
 
     public interface RecipeAdapterOnClickHandler {
         void onClick(int position);
@@ -66,7 +66,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
 
     public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        CardView cv;
+       final CardView cv;
         final TextView recipeNameTextView;
         final TextView servings;
 

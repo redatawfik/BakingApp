@@ -4,27 +4,21 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 
 import com.app.pking.bakingapp.IngredientListWidget;
 import com.app.pking.bakingapp.R;
-import com.app.pking.bakingapp.adapter.StepsAdapter;
 import com.app.pking.bakingapp.model.Ingredient;
 import com.app.pking.bakingapp.model.Recipe;
 
 import org.parceler.Parcels;
 
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsFragment.OnItemClickListener {
@@ -33,10 +27,10 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
     private static final String STEP_INDEX_KEY = "stepIndex";
 
     private int stepIndex;
-    Recipe mRecipe;
+    private  Recipe mRecipe;
 
     private boolean mTwoPane;
-    StepFragment newFragment;
+    private StepFragment newFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +88,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
 
         StringBuilder ingredientText = new StringBuilder();
         int count = 1;
-        for (Ingredient ingredient : mRecipe.getIngeddientList()) {
+        for (Ingredient ingredient : mRecipe.getIngredientList()) {
             ingredientText.append(count).append("- ").append(ingredient.getIngredient()).append(" : ").append(ingredient.getQuantity()).append(" ").append(ingredient.getMeasure()).append("\n");
             count++;
         }

@@ -3,5 +3,10 @@
 
     <string name="servings">Servings: </string>
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+
+    <string name="step_image">Image associated with step</string>
+    <string name="food_icon">Icon for Recipe</string>
+    <string name="next_step">Go to next step</string>
+    <string name="ingredients">Ingredients list : </string>
+
 </resources>

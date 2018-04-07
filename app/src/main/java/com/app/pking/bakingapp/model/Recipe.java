@@ -1,24 +1,22 @@
 package com.app.pking.bakingapp.model;
 
 
-import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Parcel
-public class Recipe implements Parcelable {
+public class Recipe {
 
     @SerializedName("id")
     private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("ingredients")
-    private List<Ingredient> ingeddientList;
+    private List<Ingredient> ingredientList;
     @SerializedName("steps")
     private List<Step> stepList;
     @SerializedName("servings")
@@ -35,8 +33,8 @@ public class Recipe implements Parcelable {
         return name;
     }
 
-    public List<Ingredient> getIngeddientList() {
-        return ingeddientList;
+    public List<Ingredient> getIngredientList() {
+        return ingredientList;
     }
 
     public List<Step> getStepList() {
@@ -51,44 +49,7 @@ public class Recipe implements Parcelable {
         return image;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(android.os.Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.name);
-        dest.writeList(this.ingeddientList);
-        dest.writeTypedList(this.stepList);
-        dest.writeInt(this.servings);
-        dest.writeString(this.image);
-    }
-
     public Recipe() {
     }
 
-    protected Recipe(android.os.Parcel in) {
-        this.id = in.readInt();
-        this.name = in.readString();
-        this.ingeddientList = new ArrayList<Ingredient>();
-        in.readList(this.ingeddientList, Ingredient.class.getClassLoader());
-        this.stepList = in.createTypedArrayList(Step.CREATOR);
-        this.servings = in.readInt();
-        this.image = in.readString();
-    }
-
-    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(android.os.Parcel source) {
-            return new Recipe(source);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-    };
 }

@@ -13,13 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.pking.bakingapp.R;
 import com.app.pking.bakingapp.model.Step;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -31,19 +29,15 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-
-import org.parceler.Parcels;
 
 public class StepFragment extends Fragment {
 
     private static final String TAG = StepFragment.class.getSimpleName();
 
-    Context context;
+    private Context context;
     private Step mStep;
-    SimpleExoPlayerView mPlayerView;
-    SimpleExoPlayer mPlayer;
+    private SimpleExoPlayerView mPlayerView;
+    private SimpleExoPlayer mPlayer;
 
     public void setContext(Context context) {
         this.context = context;

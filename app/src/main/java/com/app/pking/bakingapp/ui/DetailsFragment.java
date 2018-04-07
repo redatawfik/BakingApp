@@ -12,26 +12,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.app.pking.bakingapp.R;
 import com.app.pking.bakingapp.adapter.StepsAdapter;
 import com.app.pking.bakingapp.model.Ingredient;
 import com.app.pking.bakingapp.model.Recipe;
-import com.app.pking.bakingapp.model.Step;
 
-import java.util.List;
 
 public class DetailsFragment extends Fragment implements StepsAdapter.StepAdapterOnClickHandler {
 
     private static final String TAG = StepFragment.class.getSimpleName();
 
     private Recipe mRecipe;
-    StepsAdapter mAdapter;
-    Context context;
+    private Context context;
 
-    OnItemClickListener mCallback;
+    private OnItemClickListener mCallback;
 
     public interface OnItemClickListener {
         void onItemClickListener(int position);
@@ -51,13 +47,13 @@ public class DetailsFragment extends Fragment implements StepsAdapter.StepAdapte
         RecyclerView stepRecyclerView = rootView.findViewById(R.id.rv_recipe_steps);
 
         if (mRecipe != null) {
-            for (Ingredient ingredient : mRecipe.getIngeddientList()) {
+            for (Ingredient ingredient : mRecipe.getIngredientList()) {
                 ingredients.append(ingredient.getIngredient() + " : " +
                         ingredient.getQuantity() + " " +
                         ingredient.getMeasure() + "\n");
             }
 
-            mAdapter = new StepsAdapter(mRecipe.getStepList(), context, this);
+            StepsAdapter mAdapter = new StepsAdapter(mRecipe.getStepList(), context, this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             stepRecyclerView.setLayoutManager(layoutManager);
             stepRecyclerView.setAdapter(mAdapter);

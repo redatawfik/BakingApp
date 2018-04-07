@@ -20,7 +20,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/food_icon"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp"
+                android:contentDescription="@string/food_icon"
+                android:layout_marginEnd="8dp" />
 
             <LinearLayout
                 android:layout_weight="1"
