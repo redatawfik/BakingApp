@@ -17,14 +17,15 @@
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="8dp"
-        android:contentDescription="@string/step_image"/>
+        android:contentDescription="@string/step_image" />
+
     <TextView
         android:id="@+id/fr_tv_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="19sp"
-        android:background="@color/colorAccent"
         android:layout_margin="8dp"
-        android:padding="8dp"/>
+        android:background="@color/colorAccent"
+        android:padding="8dp"
+        android:textSize="19sp" />
 
 </LinearLayout>

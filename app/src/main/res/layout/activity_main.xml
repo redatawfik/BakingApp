@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:wheel="http://schemas.android.com/apk/res-auto"
-    tools:context="com.app.pking.bakingapp.ui.MainActivity"
+    android:background="@drawable/woo"
     android:orientation="vertical"
-    android:background="@drawable/woo">
+    tools:context="com.app.pking.bakingapp.ui.MainActivity">
 
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/progress_wheel"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
+        android:visibility="invisible"
         wheel:matProg_barColor="#fa2439"
-        wheel:matProg_progressIndeterminate="true"
-        android:visibility="invisible"/>
+        wheel:matProg_progressIndeterminate="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

@@ -9,18 +9,18 @@
         android:layout_height="wrap_content"
         android:background="#fd5722"
         android:contentDescription="@string/appwidget_text"
+        android:gravity="center"
+        android:padding="8dp"
         android:text="@string/ingredients"
         android:textColor="#ffffff"
         android:textSize="24sp"
-        android:textStyle="bold|italic"
-        android:gravity="center"
-        android:padding="8dp"/>
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/wd_ingredients_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="18sp"
+        android:background="@android:color/white"
         android:padding="8dp"
-        android:background="@android:color/white"/>
+        android:textSize="18sp" />
 </LinearLayout>

@@ -27,7 +27,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
     private static final String STEP_INDEX_KEY = "stepIndex";
 
     private int stepIndex;
-    private  Recipe mRecipe;
+    private Recipe mRecipe;
 
     private boolean mTwoPane;
     private StepFragment newFragment;

@@ -35,7 +35,7 @@ public class StepActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setStep();
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             index = savedInstanceState.getInt(INDEX_KEY);
         }
 
@@ -104,6 +104,6 @@ public class StepActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(INDEX_KEY,index);
+        outState.putInt(INDEX_KEY, index);
     }
 }

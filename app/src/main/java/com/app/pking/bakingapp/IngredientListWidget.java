@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 public class IngredientListWidget extends AppWidgetProvider {
 
     private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+                                        int appWidgetId) {
 
 
         // Construct the RemoteViews object

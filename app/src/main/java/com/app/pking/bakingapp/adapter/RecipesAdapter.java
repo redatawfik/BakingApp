@@ -66,7 +66,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
 
     public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-       final CardView cv;
+        final CardView cv;
         final TextView recipeNameTextView;
         final TextView servings;
 

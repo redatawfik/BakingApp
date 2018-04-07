@@ -64,7 +64,12 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         mRecyclerView.setAdapter(mRecipesAdapter);
 
 
+        if (savedInstanceState != null) {
+            setWheelInVisible();
+            mRecipeList.addAll(savedInstanceState.<Recipe>getParcelableArrayList(RECIPE_LIST_KEY));
+        } else {
             getResponseRetrofit();
+        }
 
 
     }
@@ -118,5 +123,11 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         intent.putExtra("recipe", Parcels.wrap(mRecipeList.get(position)));
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(RECIPE_LIST_KEY, mRecipeList);
     }
 }

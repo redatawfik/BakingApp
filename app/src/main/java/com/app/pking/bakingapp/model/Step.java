@@ -9,8 +9,6 @@ import com.google.gson.annotations.SerializedName;
 @org.parceler.Parcel
 public class Step implements Parcelable {
 
-
-
     @SerializedName("id")
     private int id;
     @SerializedName("shortDescription")
@@ -20,9 +18,10 @@ public class Step implements Parcelable {
     @SerializedName("videoURL")
     private String videoURL;
     @SerializedName("thumbnailURL")
-    private  String thumbnailURL;
+    private String thumbnailURL;
 
-    Step(){}
+    Step() {
+    }
 
 
     public static final Creator<Step> CREATOR = new Creator<Step>() {

@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.DetailsActivity"
+        <activity
+            android:name=".ui.DetailsActivity"
             android:parentActivityName=".ui.MainActivity"
             tools:targetApi="jelly_bean">
 
@@ -27,7 +28,8 @@
                 android:value=".ui.MainActivity" />
         </activity>
 
-        <activity android:name=".ui.StepActivity"
+        <activity
+            android:name=".ui.StepActivity"
             android:parentActivityName=".ui.DetailsActivity"
             tools:targetApi="jelly_bean">
             <!-- Parent activity meta-data to support 4.0 and lower -->
