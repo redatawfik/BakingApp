@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/ingredients_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fd5722"
+        android:contentDescription="@string/appwidget_text"
+        android:text="Ingredients list :"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        android:gravity="center"
+        android:padding="8dp"/>
+
+    <TextView
+        android:id="@+id/wd_ingredients_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:background="@android:color/white"/>
+</LinearLayout>

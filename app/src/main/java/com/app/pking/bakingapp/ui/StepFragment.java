@@ -1,0 +1,124 @@
+package com.app.pking.bakingapp.ui;
+
+
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.app.pking.bakingapp.R;
+import com.app.pking.bakingapp.model.Step;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
+
+import org.parceler.Parcels;
+
+public class StepFragment extends Fragment {
+
+    private static final String TAG = StepFragment.class.getSimpleName();
+
+    Context context;
+    private Step mStep;
+    SimpleExoPlayerView mPlayerView;
+    SimpleExoPlayer mPlayer;
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public StepFragment() {
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        if (savedInstanceState != null) {
+            mStep = savedInstanceState.getParcelable("k");
+        }
+        View rootView = inflater.inflate(R.layout.fragment_step, container, false);
+
+        mPlayerView = rootView.findViewById(R.id.exo_video_view);
+        TextView description = rootView.findViewById(R.id.fr_tv_description);
+
+        if (mStep != null) {
+            description.setText(mStep.getDescription());
+        } else {
+            Log.v(TAG, "This fragment has a null step");
+        }
+
+        try {
+            if(mStep.getVideoURL() != null && !mStep.getVideoURL().equals("")){
+                initializePlayer(Uri.parse(mStep.getVideoURL()));
+            }else {
+                mPlayerView.setVisibility(View.GONE);
+            }
+
+        } catch (NullPointerException e) {
+            Log.e(TAG, "error in initializing player===============================");
+        }
+
+        return rootView;
+    }
+
+    private void initializePlayer(Uri uri) {
+        if (mPlayer == null) {
+            TrackSelector trackSelector = new DefaultTrackSelector();
+            LoadControl loadControl = new DefaultLoadControl();
+            mPlayer = ExoPlayerFactory.newSimpleInstance(
+                    context,
+                    trackSelector,
+                    loadControl);
+            mPlayerView.setPlayer(mPlayer);
+
+
+            String userAgent = Util.getUserAgent(context, "BakingApp");
+            MediaSource mediaSource = new ExtractorMediaSource(uri, new DefaultDataSourceFactory(context, userAgent),
+                    new DefaultExtractorsFactory(), null, null);
+            mPlayer.prepare(mediaSource);
+            mPlayer.setPlayWhenReady(true);
+        }
+
+    }
+
+    public void releasePlayer() {
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+            Log.v("=====================", "Player released");
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("k", mStep);
+    }
+
+    public void setmStep(Step mStep) {
+        this.mStep = mStep;
+    }
+
+
+}
