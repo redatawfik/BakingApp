@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.app.pking.bakingapp.R;
 import com.app.pking.bakingapp.model.Step;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
@@ -38,6 +39,8 @@ public class StepFragment extends Fragment {
     private Step mStep;
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mPlayer;
+    private long playerPosition;
+    private boolean isPlayWhenReady;
 
     public void setContext(Context context) {
         this.context = context;
@@ -51,8 +54,12 @@ public class StepFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
+        playerPosition = C.TIME_UNSET;
+        isPlayWhenReady = true;
         if (savedInstanceState != null) {
             mStep = savedInstanceState.getParcelable("k");
+            playerPosition = savedInstanceState.getLong("playerPosition", C.TIME_UNSET);
+            isPlayWhenReady = savedInstanceState.getBoolean("playstate", true);
         }
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 
@@ -72,6 +79,14 @@ public class StepFragment extends Fragment {
             imageView.setVisibility(View.GONE);
         }
 
+
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         try {
             if (mStep.getVideoURL() != null && !mStep.getVideoURL().equals("")) {
                 initializePlayer(Uri.parse(mStep.getVideoURL()));
@@ -82,8 +97,6 @@ public class StepFragment extends Fragment {
         } catch (NullPointerException e) {
             Log.e(TAG, "error in initializing player===============================");
         }
-
-        return rootView;
     }
 
     private void initializePlayer(Uri uri) {
@@ -100,9 +113,11 @@ public class StepFragment extends Fragment {
             String userAgent = Util.getUserAgent(context, "BakingApp");
             MediaSource mediaSource = new ExtractorMediaSource(uri, new DefaultDataSourceFactory(context, userAgent),
                     new DefaultExtractorsFactory(), null, null);
+            if (playerPosition != C.TIME_UNSET) mPlayer.seekTo(playerPosition);
             mPlayer.prepare(mediaSource);
-            mPlayer.setPlayWhenReady(true);
+            mPlayer.setPlayWhenReady(isPlayWhenReady);
         }
+
 
     }
 
@@ -119,7 +134,21 @@ public class StepFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.v("onSaveInstanceState", "===================================================================================");
         outState.putParcelable("k", mStep);
+        outState.putLong("playerPosition", playerPosition);
+        outState.putBoolean("playstate", isPlayWhenReady);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v("onPause", "===================================================================================");
+        if (mPlayer != null) {
+            playerPosition = mPlayer.getCurrentPosition();
+            isPlayWhenReady = mPlayer.getPlayWhenReady();
+            releasePlayer();
+        }
     }
 
     public void setmStep(Step mStep) {
