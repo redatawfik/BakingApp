@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.app.pking.bakingapp.R;
 import com.app.pking.bakingapp.model.Step;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -33,7 +34,7 @@ import com.google.android.exoplayer2.util.Util;
 
 public class StepFragment extends Fragment {
 
-    private static final String TAG = StepFragment.class.getSimpleName();
+    static final String TAG = StepFragment.class.getSimpleName();
 
     private Context context;
     private Step mStep;
@@ -41,6 +42,7 @@ public class StepFragment extends Fragment {
     private SimpleExoPlayer mPlayer;
     private long playerPosition;
     private boolean isPlayWhenReady;
+
 
     public void setContext(Context context) {
         this.context = context;
@@ -54,18 +56,17 @@ public class StepFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        playerPosition = C.TIME_UNSET;
-        isPlayWhenReady = true;
         if (savedInstanceState != null) {
             mStep = savedInstanceState.getParcelable("k");
-            playerPosition = savedInstanceState.getLong("playerPosition", C.TIME_UNSET);
-            isPlayWhenReady = savedInstanceState.getBoolean("playstate", true);
         }
+
+
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 
         mPlayerView = rootView.findViewById(R.id.exo_video_view);
         TextView description = rootView.findViewById(R.id.fr_tv_description);
         ImageView imageView = rootView.findViewById(R.id.iv_step_image);
+
 
         if (mStep != null) {
             description.setText(mStep.getDescription());
@@ -75,13 +76,16 @@ public class StepFragment extends Fragment {
 
         if (mStep.getThumbnailURL() != null && !mStep.getThumbnailURL().equals("")) {
             Glide.with(this).load(mStep.getThumbnailURL()).into(imageView);
-        } else {
+        } else if (mStep.getVideoURL() != null && !mStep.getVideoURL().equals("")) {
             imageView.setVisibility(View.GONE);
+        } else {
+            imageView.setImageResource(R.drawable.prepare_image);
         }
 
 
         return rootView;
     }
+
 
     @Override
     public void onResume() {
@@ -136,9 +140,8 @@ public class StepFragment extends Fragment {
         super.onSaveInstanceState(outState);
         Log.v("onSaveInstanceState", "===================================================================================");
         outState.putParcelable("k", mStep);
-        outState.putLong("playerPosition", playerPosition);
-        outState.putBoolean("playstate", isPlayWhenReady);
     }
+
 
     @Override
     public void onPause() {
@@ -153,6 +156,23 @@ public class StepFragment extends Fragment {
 
     public void setmStep(Step mStep) {
         this.mStep = mStep;
+    }
+
+
+    public long getPlayerPosition() {
+        return playerPosition;
+    }
+
+    public void setPlayerPosition(long playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+
+    public boolean isPlayWhenReady() {
+        return isPlayWhenReady;
+    }
+
+    public void setPlayWhenReady(boolean playWhenReady) {
+        isPlayWhenReady = playWhenReady;
     }
 
 

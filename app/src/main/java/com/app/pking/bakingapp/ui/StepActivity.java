@@ -1,7 +1,9 @@
 package com.app.pking.bakingapp.ui;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,6 +14,7 @@ import com.app.pking.bakingapp.R;
 import com.app.pking.bakingapp.model.Step;
 import com.google.android.exoplayer2.C;
 
+import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -24,7 +27,8 @@ public class StepActivity extends AppCompatActivity {
     private List<Step> mStepList;
     private int index;
     private StepFragment fragment;
-    private FragmentManager fragmentManager;
+    private long playerPosition = 0;
+    private boolean isPlayWhenReady = true;
 
 
     @Override
@@ -38,17 +42,22 @@ public class StepActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             index = savedInstanceState.getInt(INDEX_KEY);
+            playerPosition = savedInstanceState.getLong("playerPosition");
+            isPlayWhenReady = savedInstanceState.getBoolean("playerState");
         }
 
-        fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragment = new StepFragment();
         fragment.setmStep(mStepList.get(index));
         fragment.setContext(this);
+        fragment.setPlayerPosition(playerPosition);
+        fragment.setPlayWhenReady(isPlayWhenReady);
 
         fragmentManager.beginTransaction()
-                .add(R.id.step_container, fragment)
+                .replace(R.id.step_container, fragment)
                 .commit();
+
     }
 
     private void setStep() {
@@ -75,11 +84,13 @@ public class StepActivity extends AppCompatActivity {
 
     }
 
+
     public void goToNextStep(View view) {
         if (index + 1 >= mStepList.size()) {
             Toast.makeText(this, "End of steps", Toast.LENGTH_SHORT).show();
         } else {
             index++;
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragment = new StepFragment();
             fragment.setmStep(mStepList.get(index));
             fragment.setContext(this);
@@ -106,5 +117,17 @@ public class StepActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(INDEX_KEY, index);
+
+
+        outState.putLong("playerPosition", playerPosition);
+        outState.putBoolean("playerState", isPlayWhenReady);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        playerPosition = fragment.getPlayerPosition();
+        isPlayWhenReady = fragment.isPlayWhenReady();
     }
 }

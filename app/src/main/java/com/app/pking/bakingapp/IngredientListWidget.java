@@ -17,6 +17,7 @@ public class IngredientListWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredient_list_widget);
 
+        views.setTextViewText(R.id.wd_ingredients_list, "Please select recipe to show ingredients lis !");
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
