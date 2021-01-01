@@ -71,7 +71,7 @@ Also few tests have been written, and hopefully we can have more from your contr
 
 MIT License
 
-Copyright (c) [2017] [Kanyinsola Fapohunda Oyindamola]
+Copyright (c) [2018] [Reda Tawfik]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
